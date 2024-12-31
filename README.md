@@ -1,6 +1,5 @@
 # Getting Started with Create React App
 
-https://github.com/user-attachments/assets/b811f06b-43ab-401e-9910-47f5efabd031
 
 
 
