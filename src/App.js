@@ -1,82 +1,41 @@
 import React, { useState } from "react";
+import { evaluate } from "mathjs"; 
 
 function App() {
-  const [number, setNumber] = useState("");
-  const [total, setTotal] = useState(0);
-  const [operation, setOperation] = useState("");
+  const [expression, setExpression] = useState("");
   const [isResultDisplayed, setIsResultDisplayed] = useState(false);
 
   const handleButtonClick = (value) => {
     if (isResultDisplayed) {
-      setNumber(value);
+      setExpression(value); 
       setIsResultDisplayed(false);
     } else {
-      setNumber((prev) => prev + value);
+      setExpression((prev) => prev + value);
     }
   };
 
   const handleOperation = (op) => {
-    if (number) {
-      const currentNumber = parseFloat(number);
-      if (operation) {
-        switch (operation) {
-          case "+":
-            setTotal((prev) => prev + currentNumber);
-            break;
-          case "-":
-            setTotal((prev) => prev - currentNumber);
-            break;
-          case "*":
-            setTotal((prev) => prev * currentNumber);
-            break;
-          case "/":
-            setTotal((prev) => prev / currentNumber);
-            break;
-          default:
-            break;
-        }
-      } else {
-        setTotal(currentNumber);
-      }
+    if (isResultDisplayed) {
+      setExpression((prev) => `${prev} ${op} `);
+      setIsResultDisplayed(false);
+    } else {
+      setExpression((prev) => `${prev.trimEnd()} ${op} `);
     }
-    setOperation(op);
-    setNumber("");
-    setIsResultDisplayed(false);
   };
 
   const calculateResult = () => {
-    if (number && operation) {
-      const currentNumber = parseFloat(number);
-      let newTotal = total;
-
-      switch (operation) {
-        case "+":
-          newTotal += currentNumber;
-          break;
-        case "-":
-          newTotal -= currentNumber;
-          break;
-        case "*":
-          newTotal *= currentNumber;
-          break;
-        case "/":
-          newTotal /= currentNumber;
-          break;
-        default:
-          break;
-      }
-
-      setTotal(newTotal);
-      setNumber(newTotal.toString());
-      setOperation("");
+    try {
+      const result = evaluate(expression.trim());
+      setExpression(result.toString());
+      setIsResultDisplayed(true);
+    } catch (error) {
+      setExpression("Error");
       setIsResultDisplayed(true);
     }
   };
 
   const resetCalculator = () => {
-    setTotal(0);
-    setNumber("");
-    setOperation("");
+    setExpression("");
     setIsResultDisplayed(false);
   };
 
@@ -85,7 +44,7 @@ function App() {
       <div className="bg-black rounded-lg shadow-lg p-4 max-w-sm w-full">
         <input
           type="text"
-          value={number || total.toString()}
+          value={expression}
           readOnly
           placeholder="0"
           className="w-full text-right text-3xl p-4 mb-3 bg-gray-900 text-white border border-gray-700 rounded"
