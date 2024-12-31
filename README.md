@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-[calculator(Basic)](https://github.com/user-attachments/assets/2e65fe9e-0a4a-4b0f-adf6-6d93a1c2ed0c)
+![](https://github.com/user-attachments/assets/2e65fe9e-0a4a-4b0f-adf6-6d93a1c2ed0c)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
